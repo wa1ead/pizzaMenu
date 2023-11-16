@@ -64,24 +64,42 @@ function Menu() {
   return (
     <div>
       <h2>Our Menu</h2>
-      <Pizza />
+      <Pizza
+        name="Pizza Funghi"
+        ingredients="Tomato, Mushrooms"
+        price={12}
+        photoName="pizzas/funghi.jpg"
+      />
+    </div>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <div>
+      <img src={props.photoName} alt={props.name} />
+      <div>
+        <h2>{props.name}</h2>
+        <p>{props.ingredients}</p>
+        <span>{props.price + 3}</span>
+      </div>
     </div>
   );
 }
 
 function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 8;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+  // if (hour >= openHour && hour <= closeHour) alert("We're Currently Open!");
+  // else alert("Sorry We're Closed");
+
   return (
     <footer>{new Date().toLocaleTimeString()}. We're Currently Open</footer>
   );
   // return React.createElement("footer", null, "We're Currently Open");
-}
-
-function Pizza() {
-  return (
-    <div>
-      <h2>Pizza</h2>
-    </div>
-  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
