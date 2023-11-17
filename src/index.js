@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 import ReactDOM from "react-dom/client";
 
 const pizzaData = [
@@ -57,32 +58,52 @@ function App() {
 }
 
 function Header() {
-  return <h1>Fast React Pizza Co.</h1>;
-}
-
-function Menu() {
   return (
-    <div>
-      <h2>Our Menu</h2>
-      <Pizza
-        name="Pizza Funghi"
-        ingredients="Tomato, Mushrooms"
-        price={12}
-        photoName="pizzas/funghi.jpg"
-      />
+    <div className="header">
+      <h1>Fast React Pizza Co.</h1>
     </div>
   );
 }
 
-function Pizza(props) {
+function Menu() {
+  const pizzas = pizzaData;
   return (
-    <div>
-      <img src={props.photoName} alt={props.name} />
+    <main className="menu">
+      <h2>Our Menu</h2>
+      {pizzas ? (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>We're Still Working On our Menu..., Please Comeback Later!</p>
+      )}
+    </main>
+  );
+}
+
+function Pizza({ pizzaObj }) {
+  return (
+    <li className="pizza">
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h2>{props.name}</h2>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
       </div>
+    </li>
+  );
+}
+
+function Order({ openHour, closeHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're Open from {openHour}:00 until {closeHour}:00. Come Visit us or
+        Order Online
+      </p>
+      <button className="btn">Order Now!</button>
     </div>
   );
 }
@@ -97,7 +118,15 @@ function Footer() {
   // else alert("Sorry We're Closed");
 
   return (
-    <footer>{new Date().toLocaleTimeString()}. We're Currently Open</footer>
+    <footer className="footer">
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p>
+          We're Happy to Welcome you Between {openHour}:00 and {closeHour}:00.
+        </p>
+      )}
+    </footer>
   );
   // return React.createElement("footer", null, "We're Currently Open");
 }
